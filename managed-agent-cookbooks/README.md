@@ -1,5 +1,21 @@
 # Managed-agent templates for Chinese financial services
 
+> ⚠️ **opencode 适配说明**
+>
+> 本目录是原项目（Claude Managed Agent）的 **设计参考文件**。YAML 格式、`model: claude-opus-4-7`、`POST /v1/agents` API、`from_plugin` 等均为 **Claude 生态概念**，无法直接在 opencode 中加载。
+>
+> **opencode 可加载的等效 agent 在 [`../agents/`](../agents/) 目录**（TOML 格式）。
+>
+> | Claude Managed Agent | opencode 等效 |
+> |---|---|
+> | `agent.yaml` + `model: claude-opus-4-7` | `agents/<name>.toml`（opencode 不内嵌模型配置） |
+> | `subagents/*.yaml` | 合并到 agent 的 `developer_instructions` 中 |
+> | `ANTHROPIC_API_KEY` | opencode 使用各自模型提供商的 API key（`OPENAI_API_KEY` / `ANTHROPIC_API_KEY` 等） |
+> | `POST /v1/agents` + `deploy-managed-agent.sh` | 不适用；agent TOML 放至 `CODEX_HOME/agents/` 即可用 |
+> | `from_plugin` / `callable_agents` | `skill()` 加载方式 + agent 路由替换 |
+>
+> 以下内容保留原样，供理解 agent 设计思路、安全隔离策略、handoff 编排参考。
+
 Every agent in this directory ships **two ways from one source**: as a Cowork plugin your analysts install today, and as a Claude Managed Agent template your platform team deploys behind your own workflow engine. **Same agent, same skills — pick your surface.** Each directory below is a deploy manifest that references the canonical system prompt and skills from the matching plugin, so there is one source of truth.
 
 Run `../scripts/deploy-managed-agent.sh <slug>` to upload skills, create leaf workers, and `POST /v1/agents` with the resolved config. Each template ships with [`steering-examples.json`](./china-pitch-agent/steering-examples.json) and a per-agent README covering its security tier and handoffs.

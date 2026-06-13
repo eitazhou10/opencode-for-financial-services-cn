@@ -4,13 +4,14 @@
 
 Comps, precedents, DCF, LBO → branded pitch deck for A-share targets, end to end. Same source as the [`china-pitch-agent`](../../agent-plugins/china-pitch-agent) Cowork plugin — this directory is the Managed Agent cookbook for `POST /v1/agents`.
 
-## Deploy
+## opencode 适配
 
-```bash
-export ANTHROPIC_API_KEY=sk-ant-...
-export AKSHARE_MCP_URL=...
-../../scripts/deploy-managed-agent.sh china-pitch-agent
-```
+此 agent 的 opencode 可加载版本在 [`../../agents/china-pitch-agent.toml`](../../agents/china-pitch-agent.toml)。
+
+opencode 中无需 `ANTHROPIC_API_KEY` 环境变量；MCP 服务器直接通过 `skill()` 加载：
+- `skill(name="china-market-data")` 提供数据源
+- `skill(name="china-pptx-author")` 提供 PPT 生成
+- `skill(name="china-comps")`、`skill(name="china-dcf")` 等提供估值方法
 
 ## Steering events
 

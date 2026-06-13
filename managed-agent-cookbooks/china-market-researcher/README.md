@@ -4,13 +4,11 @@
 
 A-share sector or theme → industry overview, competitive landscape, peer comps, and ideas shortlist. Same source as the [`china-market-researcher`](../../agent-plugins/china-market-researcher) Cowork plugin — this directory is the Managed Agent cookbook for `POST /v1/agents`.
 
-## Deploy
+## opencode 适配
 
-```bash
-export ANTHROPIC_API_KEY=sk-ant-...
-export AKSHARE_MCP_URL=... CHINA_NEWS_MCP_URL=...
-../../scripts/deploy-managed-agent.sh china-market-researcher
-```
+此 agent 的 opencode 可加载版本在 [`../../agents/china-market-researcher.toml`](../../agents/china-market-researcher.toml)。
+
+opencode 中无需 `ANTHROPIC_API_KEY`；通过 `skill()` 加载行业研究技能和数据源。
 
 ## Steering events
 

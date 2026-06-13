@@ -4,13 +4,11 @@
 
 A-share earnings call + filings → model update → variance table → earnings note. Same source as the [`china-earnings-reviewer`](../../agent-plugins/china-earnings-reviewer) Cowork plugin — this directory is the Managed Agent cookbook for `POST /v1/agents`.
 
-## Deploy
+## opencode 适配
 
-```bash
-export ANTHROPIC_API_KEY=sk-ant-...
-export AKSHARE_MCP_URL=... CHINA_NEWS_MCP_URL=...
-../../scripts/deploy-managed-agent.sh china-earnings-reviewer
-```
+此 agent 的 opencode 可加载版本在 [`../../agents/china-earnings-reviewer.toml`](../../agents/china-earnings-reviewer.toml)。
+
+opencode 中无需 `ANTHROPIC_API_KEY`；通过 `skill()` 加载业绩点评技能和数据源。
 
 ## Steering events
 
