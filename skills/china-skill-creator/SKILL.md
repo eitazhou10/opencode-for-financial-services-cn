@@ -25,13 +25,13 @@ Use this skill when:
 
 | Original Vertical | China Vertical | Path |
 |-------------------|----------------|------|
-| `financial-analysis/` | `china-finance/` | `china/vertical-plugins/china-finance/skills/` |
-| `equity-research/` | `china-finance/` | `china/vertical-plugins/china-finance/skills/` |
-| `investment-banking/` | `investment-banking/` | `china/vertical-plugins/investment-banking/skills/` |
-| `private-equity/` | `private-equity/` | `china/vertical-plugins/private-equity/skills/` |
-| `wealth-management/` | `wealth-management/` | `china/vertical-plugins/wealth-management/skills/` |
-| `fund-admin/` | `fund-admin/` | `china/vertical-plugins/fund-admin/skills/` |
-| `operations/` | `operations/` | `china/vertical-plugins/operations/skills/` |
+| `financial-analysis/` | `china-finance/` | `skills/china-*` |
+| `equity-research/` | `china-finance/` | `skills/china-*` |
+| `investment-banking/` | `investment-banking/` | `skills/china-*` |
+| `private-equity/` | `private-equity/` | `skills/china-*` |
+| `wealth-management/` | `wealth-management/` | `skills/china-*` |
+| `fund-admin/` | `fund-admin/` | `skills/china-*` |
+| `operations/` | `operations/` | `skills/china-*` |
 
 ### Step 2: Name Convention
 
@@ -216,7 +216,7 @@ get_market_headlines(top_n=20)              → Market headlines
 
 **Never use in china-* skills:**
 
-Western data sources, indices, and filing systems must be replaced with China-native equivalents (iFind / AkShare / 巨潮 / 上交所 / 深交所 / 中证指数 / 东方财富 / 企查查 / 晨星中国). The `check-china.py` validation script enforces this — any skill containing these patterns will fail validation.
+Western data sources, indices, and filing systems must be replaced with China-native equivalents (iFind / AkShare / 巨潮 / 上交所 / 深交所 / 中证指数 / 东方财富 / 企查查 / 晨星中国).
 
 See the "China Adaptation Checklist" (Step 5) for the full mapping.
 
@@ -225,11 +225,8 @@ See the "China Adaptation Checklist" (Step 5) for the full mapping.
 **After creating a new skill:**
 
 ```bash
-# Check for forbidden patterns
-cd china && python3 scripts/check-china.py
-
-# Sync to agent bundles
-python3 scripts/sync-china-skills.py
+# Check for forbidden patterns (from project root)
+../scripts/check-china.py
 ```
 
 ## Quick-Start Template
@@ -289,15 +286,14 @@ Before delivering:
 **Scenario:** Create `china-portfolio-optimization`
 
 1. **Choose vertical:** `china-finance` (financial analysis)
-2. **Create directory:** `china/vertical-plugins/china-finance/skills/china-portfolio-optimization/`
+2. **Create directory:** `skills/china-portfolio-optimization/`
 3. **Create SKILL.md:** Use template above
 4. **Add China adaptations:**
    - Use A-share universe
    - Consider 涨跌停 limits
    - Factor in 北向资金 flows
    - Use 东方财富 sector classifications
-5. **Sync:** Run `sync-china-skills.py`
-6. **Validate:** Run `check-china.py`
+5. **Validate:** Run `../scripts/check-china.py` from the new skill's directory
 > **Data Source Mode Switch**: Set env var `IFIND_DATA_SOURCE_MODE` to control data source preference.
 > - `ifind-only` (strict): Use iFind only, error if unavailable
 > - `ifind-fallback` (default): iFind preferred, fallback to AkShare

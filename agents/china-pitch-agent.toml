@@ -54,5 +54,5 @@ When a data source is unavailable, automatically fall back to the next tier.
 
 ## Skills this agent uses
 
-`china-market-data` · `china-comps` · `china-dcf` · `china-3-statement-model` · `china-lbo-model` · `china-strip-profile` · `china-competitive-analysis` · `china-sector-overview` · `china-earnings-analysis` · `china-thesis-tracker` · `china-idea-generation` · `china-merger-model` · `china-teaser` · `china-cim-builder` · `china-process-letter` · `china-deal-tracker` · `audit-xls`
+`china-market-data` · `china-comps` · `china-dcf` · `china-3-statement-model` · `china-lbo-model` · `china-strip-profile` · `china-competitive-analysis` · `china-sector-overview` · `china-earnings-analysis` · `china-thesis-tracker` · `china-idea-generation` · `china-merger-model` · `china-teaser` · `china-cim-builder` · `china-process-letter` · `china-deal-tracker` · `china-audit-xls`
 """

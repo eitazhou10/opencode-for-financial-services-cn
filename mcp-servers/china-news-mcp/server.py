@@ -4,8 +4,8 @@ Aggregates financial news from publicly available Chinese sources:
 individual stock news, market headlines, and industry news.
 
 Usage:
-    python server.py                    # stdio (local Claude Desktop)
-    python server.py --transport sse    # HTTP/SSE (deployment)
+    python server.py                    # stdio (opencode default)
+    python server.py --transport sse    # HTTP/SSE (distributed deployment)
 """
 
 import argparse

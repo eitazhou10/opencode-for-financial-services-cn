@@ -47,5 +47,5 @@ When a data source is unavailable, automatically fall back to the next tier.
 
 ## Skills this agent uses
 
-`china-market-data` · `china-comps` · `china-dcf` · `china-3-statement-model` · `china-lbo-model` · `china-model-update` · `audit-xls`
+`china-market-data` · `china-comps` · `china-dcf` · `china-3-statement-model` · `china-lbo-model` · `china-model-update` · `china-audit-xls`
 """

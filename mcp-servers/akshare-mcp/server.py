@@ -5,10 +5,10 @@ and historical pricing. All data sourced from AkShare (open-source Chinese
 financial data library, backed by East Money / 东方财富).
 
 Usage:
-    # Run as stdio server (for local Claude Desktop integration)
+    # Run as stdio server (opencode default)
     python server.py
 
-    # Run as HTTP/SSE server (for managed-agent deployment)
+    # Run as HTTP/SSE server (distributed deployment)
     python server.py --transport sse --port 8000
 """
 
