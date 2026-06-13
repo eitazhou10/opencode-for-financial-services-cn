@@ -5,6 +5,10 @@ description: Comparable company analysis for A-share stocks. Uses AkShare MCP to
 
 # china-comps
 
+## Purpose
+
+构建 A 股可比公司估值（PE/PB/PS/EV/EBITDA）— 定义同行组，拉取财务数据，计算估值倍数，评估相对价值。
+
 ## Data Sources (Multi-Tier)
 
 ### Tier 0 — 万得 Wind（最全面付费数据）

@@ -5,6 +5,10 @@ description: DCF valuation model for A-share stocks using Chinese financial data
 
 # china-dcf
 
+## Purpose
+
+构建 A 股 DCF 估值模型 — 使用中债国债收益率作为无风险利率，适配中国市场参数的现金流折现估值。
+
 ## Data Sources (Multi-Tier)
 
 ### Tier 0 — 万得 Wind（最全面付费数据）

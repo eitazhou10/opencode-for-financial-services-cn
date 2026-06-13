@@ -5,6 +5,10 @@ description: Query A-share and Chinese financial market data via multiple data s
 
 # china-market-data
 
+## Purpose
+
+查询 A 股和中国金融市场数据 — 多级数据源（Wind Tier-0 → iFind Tier-1 → AkShare Tier-2 → 新闻 Tier-3），自动降级。
+
 ## Data sources (multi-tier)
 
 ### Tier 0 — 万得 Wind（最全面付费数据）
