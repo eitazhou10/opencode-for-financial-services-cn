@@ -28,6 +28,11 @@ opencode-for-financial-services-cn/
 │   ├── china-market-researcher.toml
 │   ├── china-earnings-reviewer.toml
 │   └── china-model-builder.toml
+├── managed-agent-cookbooks/ # 原版 Claude Managed Agent YAML (参考设计)
+│   ├── china-pitch-agent/
+│   ├── china-market-researcher/
+│   ├── china-earnings-reviewer/
+│   └── china-model-builder/
 ├── scripts/                # 工具脚本
 │   ├── install.sh          # 一键安装脚本
 │   └── generate_a_share_ppt.py
