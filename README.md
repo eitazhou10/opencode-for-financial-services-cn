@@ -7,6 +7,10 @@
 > 原版是 Anthropic 官方 [claude-for-financial-services](https://github.com/anthropics/claude-for-financial-services) 的中国市场适配分支。
 > 本项目将 Claude 插件格式改造为 opencode 兼容的 SKILL.md + TOML agent 格式，MCP 服务器保持不变。
 
+**Important**
+
+本仓库内容不构成投资、法律、税务或会计建议。Agents 只用于起草分析师工作成果，所有输出都需要合格专业人员复核。Agents 不提供投资建议，不执行交易，不绑定风险，不入账，也不批准客户准入。
+
 ---
 
 ## 项目结构
