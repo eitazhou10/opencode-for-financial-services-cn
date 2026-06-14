@@ -5,66 +5,55 @@
 
 ## 背景
 
-当前 `china/` 目录下的金融数据层仅依赖两个免费开源数据源：
-- **akshare-mcp** — A 股行情/财报/行业/指数（基于东方财富）
-- **china-news-mcp** — 财经新闻和公告
+当前金融数据层仅依赖两个免费开源数据源：
+- **akshare-mcp** (``mcp-servers/akshare-mcp/``) — A 股行情/财报/行业/指数（基于东方财富）
+- **china-news-mcp** (``mcp-servers/china-news-mcp/``) — 财经新闻和公告
 
 需要集成同花顺 iFind 作为**付费级数据源**，同时保留 AkShare 作为免费备选。架构需支持后续扩展更多数据商（如 Wind、Tushare、聚宽等）。
 
 ## 需求分析
 
 ### 1. iFind MCP Server
-- 在 `china/mcp-servers/ifind-mcp/` 下创建标准 MCP Server
-- 复用 `ifind-finance-data-1.1.0/` 的 `call.py` / `call-node.js` 调用逻辑
+- 在 `mcp-servers/ifind-mcp/` 下创建标准 MCP Server
 - 封装为 FastMCP stdio/SSE 服务，与现有 akshare-mcp 架构对齐
 - 覆盖 iFind 7 大服务域：stock / fund / edb / news / bond / global_stock / index
 - 密钥通过 `mcp_config.json` 管理，支持环境变量覆盖
 
 ### 2. Skill 层更新
-- 更新 `china-market-data` SKILL.md，增加 iFind 作为 **Tier-1 付费数据源**
+- 更新 `skills/china-market-data/SKILL.md`，增加 iFind 作为 **Tier-1 付费数据源**
 - 定义数据源优先级策略：iFind（付费精确数据）> AkShare（免费备选）
 - 保持 AkShare 工具不变，确保向后兼容
 
-### 3. Agent Prompt 更新
-- 4 个 Agent 的 `tools` frontmatter 增加 `mcp__ifind__*`
+### 3. Agent 配置更新
+- 4 个 TOML Agent（`agents/*.toml`）增加 `ifind_mcp` 工具引用
 - Workflow 中增加 iFind 数据获取指引
 - 更新数据源优先级说明
 
-### 4. Managed Agent Cookbook 更新
-- 4 个 `agent.yaml` 增加 ifind mcp_toolset 和 mcp_server 配置
-- 增加 `IFIND_MCP_URL` / `IFIND_AUTH_TOKEN` 环境变量引用
-
-### 5. 文档与校验更新
-- CLAUDE.md 增加 iFind MCP 启动说明
-- README.md 更新数据层表格
-- check-china.py 增加 ifind-mcp 校验
+### 4. 文档与校验更新
+- `README.md` 更新数据层表格
+- `scripts/check-china.py` 增加 ifind-mcp 校验
 
 ## 任务清单
 
 | # | 任务 | 文件 | 状态 |
 |---|------|------|------|
-| 1 | 创建 iFind MCP Server | `china/mcp-servers/ifind-mcp/server.py` | ✅ 完成 |
-| 2 | 创建 iFind MCP requirements | `china/mcp-servers/ifind-mcp/requirements.txt` | ✅ 完成 |
-| 3 | 创建 iFind MCP config 模板 | `china/mcp-servers/ifind-mcp/mcp_config.json` | ✅ 完成 |
-| 4 | 更新 china-market-data skill | `china/vertical-plugins/china-finance/skills/china-market-data/SKILL.md` | ✅ 完成 |
-| 5 | 更新 china-earnings-reviewer agent | `china/agent-plugins/china-earnings-reviewer/agents/china-earnings-reviewer.md` | ✅ 完成 |
-| 6 | 更新 china-market-researcher agent | `china/agent-plugins/china-market-researcher/agents/china-market-researcher.md` | ✅ 完成 |
-| 7 | 更新 china-model-builder agent | `china/agent-plugins/china-model-builder/agents/china-model-builder.md` | ✅ 完成 |
-| 8 | 更新 china-pitch-agent agent | `china/agent-plugins/china-pitch-agent/agents/china-pitch-agent.md` | ✅ 完成 |
-| 9 | 更新 4 个 managed-agent agent.yaml | `china/managed-agent-cookbooks/*/agent.yaml` | ✅ 完成 |
-| 10 | 更新 CLAUDE.md | `china/CLAUDE.md` | ✅ 完成 |
-| 11 | 更新 README.md | `china/README.md` | ✅ 完成 |
-| 12 | 更新 check-china.py | `china/scripts/check-china.py` | ✅ 完成 |
-| 13 | 运行 check-china.py 验证 | — | ✅ 通过 |
+| 1 | 创建 iFind MCP Server | `mcp-servers/ifind-mcp/server.py` | ✅ 完成 |
+| 2 | 创建 iFind MCP requirements | `mcp-servers/ifind-mcp/requirements.txt` | ✅ 完成 |
+| 3 | 创建 iFind MCP config 模板 | `mcp-servers/ifind-mcp/mcp_config.json` | ✅ 完成 |
+| 4 | 更新 china-market-data skill | `skills/china-market-data/SKILL.md` | ✅ 完成 |
+| 5–8 | Agent 更新（原 agent-plugins 已转换为 TOML 格式） | `agents/*.toml` | ✅ 完成 |
+| 9 | 更新 README.md | `README.md` | ✅ 完成 |
+| 10 | 更新 check-china.py | `scripts/check-china.py` | ✅ 完成 |
+| 11 | 运行 check-china.py 验证 | — | ✅ 通过 |
 
 ## 架构设计：可扩展数据源层
 
 ```
 mcp-servers/
-├── akshare-mcp/       # 免费 — A 股基础数据（保留）
-├── china-news-mcp/    # 免费 — 新闻公告（保留）
-├── ifind-mcp/         # 付费 — 同花顺 iFind（新增）
-└── [future]-mcp/      # 预留 — Wind / Tushare / 聚宽等
+├── akshare-mcp/       # 免费 — A 股基础数据
+├── china-news-mcp/    # 免费 — 新闻公告
+├── ifind-mcp/         # 付费 — 同花顺 iFind
+└── wind-mcp/          # 付费 — 万得 Wind（已集成）
 ```
 
 数据源优先级策略（在 skill 中定义）：
@@ -118,7 +107,7 @@ mcp-servers/
 
 ### Wind MCP Server
 
-- 路径：`china/mcp-servers/wind-mcp/`
+- 路径：`mcp-servers/wind-mcp/`
 - 架构：Python FastMCP 封装万得远程 JSON-RPC 2.0 API
 - 基地址：`https://mcp.wind.com.cn`
 - 认证：`Authorization: Bearer <WIND_API_KEY>`（Key 格式以 `ak_` 开头）
@@ -226,11 +215,7 @@ mcp-servers/
 | 1 | 创建 Wind MCP Server | `mcp-servers/wind-mcp/server.py` | ✅ 完成 |
 | 2 | 创建 Wind MCP requirements | `mcp-servers/wind-mcp/requirements.txt` | ✅ 完成 |
 | 3 | 创建 Wind MCP config 模板 | `mcp-servers/wind-mcp/mcp_config.json` | ✅ 完成 |
-| 4 | 更新 6 个 .mcp.json | `vertical-plugins/*/.mcp.json` | ✅ 完成 |
-| 5 | 更新 4 个 agent .md | `agent-plugins/*/agents/*.md` | ✅ 完成 |
-| 6 | 更新 4 个 agent.yaml | `managed-agent-cookbooks/*/agent.yaml` | ✅ 完成 |
-| 7 | 更新 CLAUDE.md | `CLAUDE.md` | ✅ 完成 |
-| 8 | 更新 check-china.py | `scripts/check-china.py` | ✅ 完成 |
-| 9 | 更新 README.md | `README.md` | ✅ 完成 |
-| 10 | 更新 SKILL.md 文件 | `vertical-plugins/*/skills/*/SKILL.md` | ✅ 完成 |
-| 11 | ✅ server.py v2.0: 按官方 tool-contracts.md 重新对齐 44 个工具名称、参数结构、服务域划分 | `mcp-servers/wind-mcp/server.py` | ✅ 完成 |
+| 4 | 更新 check-china.py | `scripts/check-china.py` | ✅ 完成 |
+| 5 | 更新 README.md | `README.md` | ✅ 完成 |
+| 6 | 更新 SKILL.md 文件 | `skills/*/SKILL.md` | ✅ 完成 |
+| 7 | server.py v2.0: 按官方 tool-contracts.md 重新对齐 44 个工具名称、参数结构、服务域划分 | `mcp-servers/wind-mcp/server.py` | ✅ 完成 |
