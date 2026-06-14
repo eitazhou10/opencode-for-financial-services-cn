@@ -57,7 +57,7 @@ pip install -r mcp-servers/china-news-mcp/requirements.txt
 免费数据源无需密钥，可直接启动：
 
 ```bash
-# 启动 AkShare MCP (A 股行情/财报/行业数据)
+# 启动 AkShare MCP (A 股行情/财报/行业数据 — 无需 API 密钥，数据采集自公开财经网站)
 python3 mcp-servers/akshare-mcp/server.py
 
 # 启动财经新闻 MCP (财联社/东方财富/交易所公告)
@@ -214,10 +214,10 @@ Agent 文件为 TOML 格式，安装到 `CODEX_HOME/agents/` 目录后可在 ope
 |---|---|---|---|
 | **Tier-0** | wind-mcp | 💰 付费 | 万得 Wind — 44 个工具，全市场最全面数据 |
 | **Tier-1** | ifind-mcp | 💰 付费 | 同花顺 iFind — 31 个工具，精准 A 股数据 |
-| **Tier-2** | akshare-mcp | 🆓 免费 | AkShare 开源 — 行情/财报/行业/指数 |
+| **Tier-2** | akshare-mcp | 🆓 免费 | AkShare 开源 — 从公开财经网站实时采集数据（东方财富/同花顺/新浪财经等）。无需任何 API 密钥，开箱即用 |
 | **Tier-3** | china-news-mcp | 🆓 免费 | 财经新闻（财联社/东方财富/交易所公告） |
 
-免费数据源 (AkShare + 财经新闻) 无需注册，开箱即用。
+免费数据源 (AkShare + 财经新闻) 无需注册，开箱即用。AkShare 不需要任何 API 密钥，数据采集自公开数据源，仅需网络可达即可工作。
 
 ---
 
