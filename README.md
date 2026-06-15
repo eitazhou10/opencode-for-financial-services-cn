@@ -38,8 +38,12 @@ opencode-for-financial-services-cn/
 │   ├── china-earnings-reviewer/
 │   └── china-model-builder/
 ├── scripts/                # 工具脚本
-│   ├── install.sh          # 一键安装脚本
-│   └── generate_a_share_ppt.py
+│   ├── install.sh              # 一键安装脚本
+│   ├── check-china.py          # 完整性自检
+│   ├── test-all.sh             # 全量测试
+│   ├── validate.py             # JSON Schema 校验
+│   └── generate_a_share_ppt.py # A 股路演 PPT 生成
+├── ORCHESTRATION.md        # opencode 多 Agent 编排说明
 ├── SKILLS-MANIFEST.json    # Skills 注册清单
 └── LICENSE                 # Apache 2.0
 ```
@@ -237,6 +241,23 @@ Agent 文件为 TOML 格式，安装到 `CODEX_HOME/agents/` 目录后可在 ope
 | 许可 | Apache 2.0 | Apache 2.0 |
 
 本项目是原版的 **opencode 平台适配分支**，数据层不变，内容层格式改造。
+
+### Scripts 变换
+
+原版 10 个脚本中，5 个因依赖 Claude 平台 API 被移除，5 个保留并适配：
+
+| 脚本 | 原版作用 | 本项目 | 原因 |
+|------|----------|--------|------|
+| `install.sh` | 安装依赖 + 链接 skills/agents | ✅ 保留 | 通用，路径映射到 `skills/` |
+| `check-china.py` | 完整性自检 | ✅ 保留 | 通用 |
+| `test-all.sh` | 全量测试 | ✅ 保留 | 通用，含 Claude 残留检测 |
+| `validate.py` | JSON Schema 校验 | ✅ 保留 | 纯通用工具 |
+| `generate_a_share_ppt.py` | 生成 A 股路演 PPT | ✅ 保留 | 纯通用工具 |
+| `orchestrate.py` | Claude Agents 事件循环 → `POST /v1/agents/steer` | ❌ 移除 | → 详见 `ORCHESTRATION.md` |
+| `deploy-managed-agent.sh` | 部署到 Claude Managed Agents API | ❌ 移除 | Claude 生态专用 |
+| `sync-china-skills.py` | `vertical-plugins/` → `agent-plugins/` 同步 | ❌ 移除 | 目录结构已变 |
+| `init-repo.sh` | 初始化 Claude 版仓库结构 | ❌ 移除 | 引用已删除目录 |
+| `test-china-cookbooks.sh` | 测试 Claude cookbook 部署 | ❌ 移除 | 依赖 `deploy-managed-agent.sh` |
 
 ---
 
